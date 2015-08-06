@@ -59,7 +59,8 @@ module.exports = function(grunt) {
 		'haml': parseSource('HAML', /-#\s+include:\s+(.*)/gi),
 		'jade': parseSource('JADE', /\/\/-?\s+include:\s+(.*)/gi),
 		'scss': parseSource('SASS', /\/\/\s+include:\s+(.*)/gi),
-		'ts': parseSource('TS', /\/\/\/\s<!---?\s*include:\s+(.*)\s*-?--\s*>/gi)
+		'ts': parseSource('TS', /\/\/\/\s<!---?\s*include:\s+(.*)\s*-?--\s*>/gi),
+		'js': parseSource('JS', /\/\/\s+include:\s+(.*)/gi),
 	};
 
 	var endMarkerParsers = {
@@ -67,7 +68,8 @@ module.exports = function(grunt) {
 		'haml': findEndMarker('HAML', /-#\s+\/include/i),
 		'jade': findEndMarker('JADE', /\/\/-?\s+\/include/i),
 		'scss': findEndMarker('SASS', /\/\/\s+\/include/i),
-		'ts': findEndMarker('TS', /\/\/\/\s<!---?\s*\/include\s+-?--\>/i)
+		'ts': findEndMarker('TS', /\/\/\/\s<!---?\s*\/include\s+-?--\>/i),
+		'js': findEndMarker('JS', /\/\/\s+\/include/i),
 	};
 
 	var templates = {
@@ -93,8 +95,12 @@ module.exports = function(grunt) {
 		},
 		'ts':
 		{
-			'ts': '/// <reference path="{filePath}" />'
-		}
+		    'ts': '/// <reference path="{filePath}" />'
+		},
+        'js':
+	    {
+	        'js': '///<reference path="{filePath}" />'
+	    }
 	};
 
 	var defaultTypeMappings = {
